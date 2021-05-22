@@ -1,10 +1,8 @@
 #pragma once
 #include "DebugActions.h"
 
-namespace RAIIDemoCpp03
+namespace RAIICpp03
 {
-    void Test();
-
     class Foo : public DebugActions
     {
     public:

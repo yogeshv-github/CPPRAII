@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="RAIIDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RAIIDemo.cpp">
+    <ClCompile Include="RAIICpp03.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RAIIDemo.h">
+    <ClInclude Include="RAIICpp03.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DebugActions.h">
