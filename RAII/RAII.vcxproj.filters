@@ -18,15 +18,21 @@
     <ClCompile Include="RAIIDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RAIICpp03.cpp">
+    <ClCompile Include="RAIIDeepCopyCpp03.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RAIIDeepCopyCpp17.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RAIICpp03.h">
+    <ClInclude Include="RAIIDeepCopyCpp03.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DebugActions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RAIIDeepCopyCpp17.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

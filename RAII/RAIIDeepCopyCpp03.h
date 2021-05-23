@@ -1,7 +1,7 @@
 #pragma once
 #include "DebugActions.h"
 
-namespace RAIICpp03
+namespace RAIIDeepCopyCpp03
 {
     class Foo : public DebugActions
     {

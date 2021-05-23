@@ -1,45 +1,45 @@
-#include "RAIICpp03.h"
+#include "RAIIDeepCopyCpp17.h"
 #include <memory.h>
 #include <string>
 #include <time.h>
 #include <typeinfo>
 
-namespace RAIICpp03
+namespace RAIIDeepCopyCpp17
 {
-#pragma region RAIICpp03_Foo
+#pragma region RAIIDeepCopyCpp17_Foo
 
     Foo::Foo(const size_t resourceSz) :
         _internalResourceSize(resourceSz),
-        _pInternalResource(nullptr)
+        _internalResource(nullptr)
     {
         if (_internalResourceSize > 0)
         {
-            _pInternalResource = new int[_internalResourceSize];
-            memset(_pInternalResource, 0, (sizeof(int) * _internalResourceSize));
+            _internalResource = std::make_unique<int[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
         }
     }
 
     Foo::~Foo()
     {
-        if (_pInternalResource)
+        if (_internalResource != nullptr)
         {
-            delete _pInternalResource;
+            _internalResource.reset(nullptr);
         }
     }
 
     Foo::Foo(const Foo& other) :
         _internalResourceSize(other._internalResourceSize),
-        _pInternalResource(nullptr)
+        _internalResource(nullptr)
     {
         // Deep copy.
         if (_internalResourceSize > 0)
         {
-            _pInternalResource = new int[_internalResourceSize];
-            memset(_pInternalResource, 0, (sizeof(int) * _internalResourceSize));
+            _internalResource = std::make_unique<int[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
 
-            if (other._pInternalResource != nullptr)
+            if (other._internalResource != nullptr)
             {
-                memcpy(_pInternalResource, other._pInternalResource, (sizeof(int) * _internalResourceSize));
+                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
             }
         }
     }
@@ -48,10 +48,9 @@ namespace RAIICpp03
     {
         if (this != &other)
         {
-            if (_pInternalResource != nullptr)
+            if (_internalResource != nullptr)
             {
-                delete _pInternalResource;
-                _pInternalResource = nullptr;
+                _internalResource.reset(nullptr);
                 _internalResourceSize = 0;
             }
 
@@ -59,12 +58,12 @@ namespace RAIICpp03
             _internalResourceSize = other._internalResourceSize;
             if (_internalResourceSize > 0)
             {
-                _pInternalResource = new int[_internalResourceSize];
-                memset(_pInternalResource, 0, (sizeof(int) * _internalResourceSize));
+                _internalResource = std::make_unique<int[]>(_internalResourceSize);
+                memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
 
-                if (other._pInternalResource != nullptr)
+                if (other._internalResource != nullptr)
                 {
-                    memcpy(_pInternalResource, other._pInternalResource, (sizeof(int) * _internalResourceSize));
+                    memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
                 }
             }
         }
@@ -83,7 +82,7 @@ namespace RAIICpp03
             other.HasValidBuffer() &&
             (_internalResourceSize == other._internalResourceSize))
         {
-            return (memcmp(_pInternalResource, other._pInternalResource, (sizeof(int) * _internalResourceSize)) == 0);
+            return (memcmp(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize)) == 0);
         }
 
         return false;
@@ -101,7 +100,7 @@ namespace RAIICpp03
 
     bool Foo::HasValidBuffer() const
     {
-        return ((_pInternalResource != nullptr) && (_internalResourceSize > 0));
+        return ((_internalResource != nullptr) && (_internalResourceSize > 0));
     }
 
     void Foo::RandomizeInternalBuffers() 
@@ -111,7 +110,7 @@ namespace RAIICpp03
             srand((unsigned int)time(NULL));
             for (size_t bufferIdx = 0; bufferIdx < _internalResourceSize; bufferIdx++)
             {
-                _pInternalResource[bufferIdx] = rand() % _internalResourceSize;
+                _internalResource.get()[bufferIdx] = rand() % _internalResourceSize;
             }
         }
     }
@@ -123,7 +122,7 @@ namespace RAIICpp03
         {
             for (size_t bufferIdx = 0; bufferIdx < _internalResourceSize; bufferIdx++)
             {
-                bufferToStr.append(std::to_string(_pInternalResource[bufferIdx])).append(",");
+                bufferToStr.append(std::to_string(_internalResource.get()[bufferIdx])).append(",");
             }
 
             if (bufferToStr.back() == ',')
@@ -139,44 +138,44 @@ namespace RAIICpp03
         printf("Function: %s, Values: %s \n", __FUNCTION__, bufferToStr.c_str());
     }
 
-#pragma endregion RAIICpp03_Foo
+#pragma endregion RAIIDeepCopyCpp17_Foo
 
-#pragma region RAIICpp03_Bar
+#pragma region RAIIDeepCopyCpp17_Bar
 
     Bar::Bar(const size_t resourceSz) :
         Foo(resourceSz),
         _internalResourceSize(resourceSz),
-        _pInternalResource(nullptr)
+        _internalResource(nullptr)
     {
         if (_internalResourceSize > 0)
         {
-            _pInternalResource = new char[_internalResourceSize];
-            memset(_pInternalResource, 0, (sizeof(char) * _internalResourceSize));
+            _internalResource = std::make_unique<char[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
         }
     }
 
     Bar::~Bar()
     {
-        if (_pInternalResource)
+        if (_internalResource != nullptr)
         {
-            delete _pInternalResource;
+            _internalResource.reset(nullptr);
         }
     }
 
     Bar::Bar(const Bar& other) :
         Foo(other),
         _internalResourceSize(other._internalResourceSize),
-        _pInternalResource(nullptr)
+        _internalResource(nullptr)
     {
         // Deep copy.
         if (_internalResourceSize > 0)
         {
-            _pInternalResource = new char[_internalResourceSize];
-            memset(_pInternalResource, 0, (sizeof(char) * _internalResourceSize));
+            _internalResource = std::make_unique<char[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
 
-            if (other._pInternalResource != nullptr)
+            if (other._internalResource != nullptr)
             {
-                memcpy(_pInternalResource, other._pInternalResource, (sizeof(char) * _internalResourceSize));
+                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
             }
         }
     }
@@ -185,10 +184,9 @@ namespace RAIICpp03
     {
         if (this != &other)
         {
-            if (_pInternalResource != nullptr)
+            if (_internalResource != nullptr)
             {
-                delete _pInternalResource;
-                _pInternalResource = nullptr;
+                _internalResource.reset(nullptr);
                 _internalResourceSize = 0;
             }
 
@@ -196,12 +194,12 @@ namespace RAIICpp03
             _internalResourceSize = other._internalResourceSize;
             if (_internalResourceSize > 0)
             {
-                _pInternalResource = new char[_internalResourceSize];
-                memset(_pInternalResource, 0, (sizeof(char) * _internalResourceSize));
+                _internalResource = std::make_unique<char[]>(_internalResourceSize);
+                memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
 
-                if (other._pInternalResource != nullptr)
+                if (other._internalResource != nullptr)
                 {
-                    memcpy(_pInternalResource, other._pInternalResource, (sizeof(char) * _internalResourceSize));
+                    memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
                 }
             }
         }
@@ -226,7 +224,7 @@ namespace RAIICpp03
             otherBar.HasValidBuffer() &&
             (_internalResourceSize == otherBar._internalResourceSize))
         {
-            return (memcmp(_pInternalResource, otherBar._pInternalResource, (sizeof(char) * _internalResourceSize)) == 0);
+            return (memcmp(_internalResource.get(), otherBar._internalResource.get(), (sizeof(char) * _internalResourceSize)) == 0);
         }
 
         return false;
@@ -244,7 +242,7 @@ namespace RAIICpp03
 
     bool Bar::HasValidBuffer() const
     {
-        return ((_pInternalResource != nullptr) && (_internalResourceSize > 0));
+        return ((_internalResource != nullptr) && (_internalResourceSize > 0));
     }
 
     void Bar::RandomizeInternalBuffers()
@@ -256,7 +254,7 @@ namespace RAIICpp03
             srand((unsigned int)time(NULL));
             for (size_t bufferIdx = 0; bufferIdx < _internalResourceSize; bufferIdx++)
             {
-                _pInternalResource[bufferIdx] = 'a' + (rand() % 26);
+                _internalResource.get()[bufferIdx] = 'a' + (rand() % 26);
             }
         }
     }
@@ -270,7 +268,7 @@ namespace RAIICpp03
         {
             for (size_t bufferIdx = 0; bufferIdx < _internalResourceSize; bufferIdx++)
             {
-                bufferToStr.push_back(_pInternalResource[bufferIdx]);
+                bufferToStr.push_back(_internalResource.get()[bufferIdx]);
             }
         }
         else
@@ -280,6 +278,6 @@ namespace RAIICpp03
 
         printf("Function: %s, Values: %s \n", __FUNCTION__, bufferToStr.c_str());
     }
-#pragma endregion RAIICpp03_Bar
+#pragma endregion RAIIDeepCopyCpp17_Bar
 
 }
