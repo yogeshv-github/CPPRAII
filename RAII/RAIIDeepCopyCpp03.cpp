@@ -21,9 +21,10 @@ namespace RAIIDeepCopyCpp03
 
     Foo::~Foo()
     {
-        if (_pInternalResource)
+        if (_pInternalResource != nullptr)
         {
-            delete _pInternalResource;
+            delete [] _pInternalResource;
+            _pInternalResource = nullptr;
         }
     }
 
@@ -50,7 +51,7 @@ namespace RAIIDeepCopyCpp03
         {
             if (_pInternalResource != nullptr)
             {
-                delete _pInternalResource;
+                delete [] _pInternalResource;
                 _pInternalResource = nullptr;
                 _internalResourceSize = 0;
             }
@@ -157,9 +158,10 @@ namespace RAIIDeepCopyCpp03
 
     Bar::~Bar()
     {
-        if (_pInternalResource)
+        if (_pInternalResource != nullptr)
         {
-            delete _pInternalResource;
+            delete [] _pInternalResource;
+            _pInternalResource = nullptr;
         }
     }
 
@@ -187,7 +189,7 @@ namespace RAIIDeepCopyCpp03
         {
             if (_pInternalResource != nullptr)
             {
-                delete _pInternalResource;
+                delete [] _pInternalResource;
                 _pInternalResource = nullptr;
                 _internalResourceSize = 0;
             }
@@ -280,6 +282,7 @@ namespace RAIIDeepCopyCpp03
 
         printf("Function: %s, Values: %s \n", __FUNCTION__, bufferToStr.c_str());
     }
+
 #pragma endregion RAIIDeepCopyCpp03_Bar
 
 }
