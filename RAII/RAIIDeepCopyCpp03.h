@@ -52,7 +52,7 @@ namespace RAIIDeepCopyCpp03
         virtual void PrintInternalBuffers() override;
 
     protected:
-        virtual bool Equals(Foo const& other) const;
+        virtual bool Equals(Bar const& other) const;
 
     private:
         bool HasValidBuffer() const;

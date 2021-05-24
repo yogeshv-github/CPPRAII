@@ -257,7 +257,7 @@ namespace RAIIDeepCopyCpp03
     /// </summary>
     /// <param name="other"></param>
     /// <returns>True, on equal, false otherwise.</returns>
-    bool Bar::Equals(Foo const& other) const
+    bool Bar::Equals(Bar const& other) const
     {
         if (typeid(*this) != typeid(other))
         {
@@ -341,7 +341,7 @@ namespace RAIIDeepCopyCpp03
     /// </summary>
     void Bar::RandomizeInternalBuffers()
     {
-        Foo::RandomizeInternalBuffers();
+        __super::RandomizeInternalBuffers();
 
         if (HasValidBuffer())
         {
@@ -358,7 +358,7 @@ namespace RAIIDeepCopyCpp03
     /// </summary>
     void Bar::PrintInternalBuffers()
     {
-        Foo::PrintInternalBuffers();
+        __super::PrintInternalBuffers();
 
         std::string bufferToStr;
         if (HasValidBuffer())
