@@ -1,5 +1,8 @@
 #pragma once
 
+/// <summary>
+/// Interface to enable tracing.
+/// </summary>
 class DebugActions
 {
 public:

@@ -4,6 +4,11 @@
 
 namespace RAIIDeepCopyCpp17
 {
+    /// <summary>
+    /// Creates and manages an Integer array resource.
+    /// Foo always performs deep copy of the resource and does not maintain 
+    /// reference to resources from other Foo.
+    /// </summary>
     class Foo : public DebugActions
     {
     public:
@@ -22,11 +27,18 @@ namespace RAIIDeepCopyCpp17
 
     private:
         bool HasValidBuffer() const;
+        void AllocateResource();
+        void DeallocateResource();
 
         size_t                  _internalResourceSize;
         std::unique_ptr<int[]>    _internalResource;
     };
 
+    /// <summary>
+    /// Creates and manages a Char array resource in addition to Int Array resource of Foo.
+    /// Bar always performs deep copy of the resource and does not maintain 
+    /// reference to resources from other Bar or Foo.
+    /// </summary>
     class Bar : public Foo
     {
     public:
@@ -45,6 +57,8 @@ namespace RAIIDeepCopyCpp17
 
     private:
         bool HasValidBuffer() const;
+        void AllocateResource();
+        void DeallocateResource();
 
         size_t                  _internalResourceSize;
         std::unique_ptr<char[]>   _internalResource;

@@ -8,69 +8,70 @@ namespace RAIIDeepCopyCpp17
 {
 #pragma region RAIIDeepCopyCpp17_Foo
 
+    /// <summary>
+    /// Foo constructor. (Allocates Int array resources)
+    /// </summary>
+    /// <param name="resourceSz"> Resource size to allocate on construction.</param>
     Foo::Foo(const size_t resourceSz) :
         _internalResourceSize(resourceSz),
         _internalResource(nullptr)
     {
-        if (_internalResourceSize > 0)
-        {
-            _internalResource = std::make_unique<int[]>(_internalResourceSize);
-            memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
-        }
+        AllocateResource();
     }
 
+    /// <summary>
+    /// Foo destructor. (Deallocates Int array resources)
+    /// </summary>
     Foo::~Foo()
     {
-        if (_internalResource != nullptr)
-        {
-            _internalResource.reset(nullptr);
-        }
+        DeallocateResource();
     }
 
+    /// <summary>
+    /// Foo Copy constructor. (Deep copy of resource)
+    /// </summary>
+    /// <param name="other">Other foo to construct from.</param>
     Foo::Foo(const Foo& other) :
         _internalResourceSize(other._internalResourceSize),
         _internalResource(nullptr)
     {
         // Deep copy.
-        if (_internalResourceSize > 0)
+        AllocateResource();
+        if (other.HasValidBuffer() && HasValidBuffer())
         {
-            _internalResource = std::make_unique<int[]>(_internalResourceSize);
-            memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
-
-            if (other._internalResource != nullptr)
-            {
-                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
-            }
+            memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
         }
     }
 
+    /// <summary>
+    /// Assign operator overload (Deep copy of resource)
+    /// </summary>
+    /// <param name="other">Other foo</param>
+    /// <returns>Reference to this</returns>
     Foo& Foo::operator= (const Foo& other)
     {
         if (this != &other)
         {
-            if (_internalResource != nullptr)
-            {
-                _internalResource.reset(nullptr);
-                _internalResourceSize = 0;
-            }
+            DeallocateResource();
+
+            _internalResourceSize = other._internalResourceSize;
 
             // Deep copy.
-            _internalResourceSize = other._internalResourceSize;
-            if (_internalResourceSize > 0)
+            AllocateResource();
+            if (other.HasValidBuffer() && HasValidBuffer())
             {
-                _internalResource = std::make_unique<int[]>(_internalResourceSize);
-                memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
-
-                if (other._internalResource != nullptr)
-                {
-                    memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
-                }
+                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(int) * _internalResourceSize));
             }
         }
 
         return (*this);
     }
 
+    /// <summary>
+    /// Equality check. (Compares resources correctly)
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True, on equal, false otherwise.</returns>
     bool Foo::Equals(Foo const& other) const
     {
         if (typeid(*this) != typeid(other))
@@ -88,21 +89,64 @@ namespace RAIIDeepCopyCpp17
         return false;
     }
 
+    /// <summary>
+    /// Equality operator overload to correctly compare resource.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True on equal, false otherwise.</returns>
     bool Foo::operator== (const Foo& other) const
     {
         return this->Equals(other);
     }
 
+    /// <summary>
+    /// Inequality operator overload to correctly compare resource.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True when resources are not equal, false otherwise.</returns>
     bool Foo::operator!= (const Foo& other) const
     {
         return !(*this == other);
     }
 
+    /// <summary>
+    /// Is local foo buffer valid?
+    /// </summary>
+    /// <returns>True, when non-zero resource is allocated, false otherwise.</returns>
     bool Foo::HasValidBuffer() const
     {
         return ((_internalResource != nullptr) && (_internalResourceSize > 0));
     }
 
+    /// <summary>
+    /// Allocate Int resource array of size equal to internal resource size member variable. 
+    /// Resource array will not be allocated when internal resource size is zero. (Invalid buffer)
+    /// Fill allocated array with zeroes. 
+    /// </summary>
+    void Foo::AllocateResource()
+    {
+        if (_internalResourceSize > 0)
+        {
+            _internalResource = std::make_unique<int[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(int) * _internalResourceSize));
+        }
+    }
+
+    /// <summary>
+    /// Deallocated any allocated resource.
+    /// </summary>
+    void Foo::DeallocateResource()
+    {
+        if (_internalResource != nullptr)
+        {
+            _internalResource.reset(nullptr);
+            _internalResourceSize = 0;
+        }
+    }
+
+    /// <summary>
+    /// Update internal int buffer with random values.
+    /// </summary>
     void Foo::RandomizeInternalBuffers() 
     {
         if (HasValidBuffer())
@@ -115,6 +159,9 @@ namespace RAIIDeepCopyCpp17
         }
     }
 
+    /// <summary>
+    /// Print internal buffer for debugging purpose.
+    /// </summary>
     void Foo::PrintInternalBuffers()
     {
         std::string bufferToStr;
@@ -142,71 +189,74 @@ namespace RAIIDeepCopyCpp17
 
 #pragma region RAIIDeepCopyCpp17_Bar
 
+    /// <summary>
+    /// Bar constructor. (Allocates char array resources)
+    /// </summary>
+    /// <param name="resourceSz"> Resource size to allocate on construction.</param>
     Bar::Bar(const size_t resourceSz) :
         Foo(resourceSz),
         _internalResourceSize(resourceSz),
         _internalResource(nullptr)
     {
-        if (_internalResourceSize > 0)
-        {
-            _internalResource = std::make_unique<char[]>(_internalResourceSize);
-            memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
-        }
+        AllocateResource();
     }
 
+    /// <summary>
+    /// Bar destructor. (Deallocates char array resources)
+    /// </summary>
     Bar::~Bar()
     {
-        if (_internalResource != nullptr)
-        {
-            _internalResource.reset(nullptr);
-        }
+        DeallocateResource();
     }
 
+    /// <summary>
+    /// Bar Copy constructor. (Deep copy of resource)
+    /// </summary>
+    /// <param name="other">Other bar to construct from.</param>
     Bar::Bar(const Bar& other) :
         Foo(other),
         _internalResourceSize(other._internalResourceSize),
         _internalResource(nullptr)
     {
         // Deep copy.
-        if (_internalResourceSize > 0)
+        AllocateResource();
+        if (other.HasValidBuffer() && HasValidBuffer())
         {
-            _internalResource = std::make_unique<char[]>(_internalResourceSize);
-            memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
-
-            if (other._internalResource != nullptr)
-            {
-                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
-            }
+            memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
         }
     }
 
+    /// <summary>
+    /// Assign operator overload (Deep copy of resource)
+    /// </summary>
+    /// <param name="other">Other bar</param>
+    /// <returns>Reference to this</returns>
     Bar& Bar::operator= (const Bar& other)
     {
         if (this != &other)
         {
-            if (_internalResource != nullptr)
-            {
-                _internalResource.reset(nullptr);
-                _internalResourceSize = 0;
-            }
+            __super::operator=(other);
+
+            DeallocateResource();
+
+            _internalResourceSize = other._internalResourceSize;
 
             // Deep copy.
-            _internalResourceSize = other._internalResourceSize;
-            if (_internalResourceSize > 0)
+            AllocateResource();
+            if (other.HasValidBuffer() && HasValidBuffer())
             {
-                _internalResource = std::make_unique<char[]>(_internalResourceSize);
-                memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
-
-                if (other._internalResource != nullptr)
-                {
-                    memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
-                }
+                memcpy(_internalResource.get(), other._internalResource.get(), (sizeof(char) * _internalResourceSize));
             }
         }
 
         return (*this);
     }
 
+    /// <summary>
+    /// Equality check. (Compares resources correctly)
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True, on equal, false otherwise.</returns>
     bool Bar::Equals(Foo const& other) const
     {
         if (typeid(*this) != typeid(other))
@@ -214,7 +264,7 @@ namespace RAIIDeepCopyCpp17
             return false;
         }
 
-        if (!Foo::Equals(other))
+        if (!__super::Equals(other))
         {
             return false;
         }
@@ -230,21 +280,64 @@ namespace RAIIDeepCopyCpp17
         return false;
     }
 
+    /// <summary>
+    /// Equality operator overload to correctly compare resource.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True on equal, false otherwise.</returns>
     bool Bar::operator==(const Bar& other) const
     {
         return this->Equals(other);
     }
 
+    /// <summary>
+    /// Inequality operator overload to correctly compare resource.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns>True when resources are not equal, false otherwise.</returns>
     bool Bar::operator!=(const Bar& other) const
     {
         return !(*this == other);
     }
 
+    /// <summary>
+    /// Is local bar buffer valid?
+    /// </summary>
+    /// <returns>True, when non-zero resource is allocated, false otherwise.</returns>
     bool Bar::HasValidBuffer() const
     {
         return ((_internalResource != nullptr) && (_internalResourceSize > 0));
     }
 
+    /// <summary>
+    /// Allocate Char resource array of size equal to internal resource size member variable. 
+    /// Resource array will not be allocated when internal resource size is zero. (Invalid buffer)
+    /// Fill allocated array with zeroes. 
+    /// </summary>
+    void Bar::AllocateResource()
+    {
+        if (_internalResourceSize > 0)
+        {
+            _internalResource = std::make_unique<char[]>(_internalResourceSize);
+            memset(_internalResource.get(), 0, (sizeof(char) * _internalResourceSize));
+        }
+    }
+
+    /// <summary>
+    /// Deallocated any allocated resource.
+    /// </summary>
+    void Bar::DeallocateResource()
+    {
+        if (_internalResource != nullptr)
+        {
+            _internalResource.reset(nullptr);
+            _internalResourceSize = 0;
+        }
+    }
+
+    /// <summary>
+    /// Update internal char buffer with random values.
+    /// </summary>
     void Bar::RandomizeInternalBuffers()
     {
         Foo::RandomizeInternalBuffers();
@@ -259,6 +352,9 @@ namespace RAIIDeepCopyCpp17
         }
     }
 
+    /// <summary>
+    /// Print internal buffer for debugging purpose.
+    /// </summary>
     void Bar::PrintInternalBuffers()
     {
         Foo::PrintInternalBuffers();

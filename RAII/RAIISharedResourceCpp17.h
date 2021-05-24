@@ -5,6 +5,11 @@
 
 namespace RAIISharedResourceCpp17
 {
+    /// <summary>
+    /// Creates aand Manages an Integer array resource.
+    /// Foo assign and copy support shalow copy of the shared resource and does maintain 
+    /// reference to shared resources from other Foo.
+    /// </summary>
     class Foo : public DebugActions
     {
     public:
@@ -30,6 +35,11 @@ namespace RAIISharedResourceCpp17
         std::shared_ptr<int_array_t> _internalResource;
     };
 
+    /// <summary>
+    /// Creates and Manages a Char array resource in addition to Int Array resource of Foo.
+    /// Bar assign and copy support shallow copy of the resource and does maintain 
+    /// reference to resources from other Bar or Foo.
+    /// </summary>
     class Bar : public Foo
     {
     public:

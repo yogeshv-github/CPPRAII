@@ -11,15 +11,15 @@ void RAIIUnitTests::TestRAIICpp03()
 {
     cout << "****************  Test RAIICpp03 Start ****************" << endl;
 
-    RAIIDeepCopyCpp03::Foo* foo1 = new RAIIDeepCopyCpp03::Foo(4);
+    RAIIDeepCopyCpp03::Foo* foo1 = new RAIIDeepCopyCpp03::Foo(10);
     foo1->RandomizeInternalBuffers();
     foo1->PrintInternalBuffers();
 
-    RAIIDeepCopyCpp03::Foo* bar1 = new RAIIDeepCopyCpp03::Bar(1);
+    RAIIDeepCopyCpp03::Foo* bar1 = new RAIIDeepCopyCpp03::Bar(5);
     bar1->RandomizeInternalBuffers();
     bar1->PrintInternalBuffers();
 
-    RAIIDeepCopyCpp03::Bar* bar2 = new RAIIDeepCopyCpp03::Bar(2);
+    RAIIDeepCopyCpp03::Bar* bar2 = new RAIIDeepCopyCpp03::Bar(7);
     bar2->RandomizeInternalBuffers();
     bar2->PrintInternalBuffers();
 
@@ -50,15 +50,15 @@ void RAIIUnitTests::TestRAIICpp17()
 {
     cout << "****************  Test RAIICpp17 Start ****************" << endl;
 
-    RAIIDeepCopyCpp17::Foo* foo1 = new RAIIDeepCopyCpp17::Foo(4);
+    RAIIDeepCopyCpp17::Foo* foo1 = new RAIIDeepCopyCpp17::Foo(10);
     foo1->RandomizeInternalBuffers();
     foo1->PrintInternalBuffers();
 
-    RAIIDeepCopyCpp17::Foo* bar1 = new RAIIDeepCopyCpp17::Bar(1);
+    RAIIDeepCopyCpp17::Foo* bar1 = new RAIIDeepCopyCpp17::Bar(5);
     bar1->RandomizeInternalBuffers();
     bar1->PrintInternalBuffers();
 
-    RAIIDeepCopyCpp17::Bar* bar2 = new RAIIDeepCopyCpp17::Bar(2);
+    RAIIDeepCopyCpp17::Bar* bar2 = new RAIIDeepCopyCpp17::Bar(7);
     bar2->RandomizeInternalBuffers();
     bar2->PrintInternalBuffers();
 
@@ -89,15 +89,15 @@ void RAIIUnitTests::TestRAIISharedResourceCpp17()
 {
     cout << "****************  Test RAIISharedResourceCpp17 Start ****************" << endl;
 
-    RAIISharedResourceCpp17::Foo* foo1 = new RAIISharedResourceCpp17::Foo(4);
+    RAIISharedResourceCpp17::Foo* foo1 = new RAIISharedResourceCpp17::Foo(10);
     foo1->RandomizeInternalBuffers();
     foo1->PrintInternalBuffers();
 
-    RAIISharedResourceCpp17::Foo* bar1 = new RAIISharedResourceCpp17::Bar(1);
+    RAIISharedResourceCpp17::Foo* bar1 = new RAIISharedResourceCpp17::Bar(5);
     bar1->RandomizeInternalBuffers();
     bar1->PrintInternalBuffers();
 
-    RAIISharedResourceCpp17::Bar* bar2 = new RAIISharedResourceCpp17::Bar(2);
+    RAIISharedResourceCpp17::Bar* bar2 = new RAIISharedResourceCpp17::Bar(7);
     bar2->RandomizeInternalBuffers();
     bar2->PrintInternalBuffers();
 
