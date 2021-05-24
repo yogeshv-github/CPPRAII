@@ -1,5 +1,5 @@
 # CPPRAII
-Project to demonstrate Resource Acquisition Is Initialization on C++03 and C++17
+Project to demonstrate Resource Acquisition Is Initialization on C++03 and C++17 (https://en.cppreference.com/w/cpp/language/raii)
 
 1. RAIIDeepCopyCpp03: Deep copy implementation using raw pointers for resources.
 2. RAIIDeepCopyCpp17: Deep copy implementation using unique pointers for resources.
