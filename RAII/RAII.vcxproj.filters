@@ -27,6 +27,9 @@
     <ClCompile Include="RAIISharedResourceCpp17.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RAIIUnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RAIIDeepCopyCpp03.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RAIISharedResourceCpp17.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RAIIUnitTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

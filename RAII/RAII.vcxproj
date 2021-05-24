@@ -143,12 +143,14 @@
     <ClCompile Include="RAIIDeepCopyCpp17.cpp" />
     <ClCompile Include="RAIIDemo.cpp" />
     <ClCompile Include="RAIISharedResourceCpp17.cpp" />
+    <ClCompile Include="RAIIUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugActions.h" />
     <ClInclude Include="RAIIDeepCopyCpp03.h" />
     <ClInclude Include="RAIIDeepCopyCpp17.h" />
     <ClInclude Include="RAIISharedResourceCpp17.h" />
+    <ClInclude Include="RAIIUnitTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
